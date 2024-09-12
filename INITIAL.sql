@@ -15,3 +15,6 @@ discount integer,
 brand_origin varchar
 );
 
+COPY raw_data.sales (id, auto, gasoline_consumption, price, date, person_name, phone, discount, brand_origin)
+FROM '/Users/cars.csv'
+WITH CSV HEADER NULL 'null';
