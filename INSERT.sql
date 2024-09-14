@@ -25,7 +25,7 @@ INNER JOIN car_shop.brands b
 
 -- models_colors
 INSERT INTO car_shop.models_colors (model_id, color_id)
-SELECT m.id, c.id
+SELECT distinct m.id, c.id
 FROM raw_data.sales s 
 INNER JOIN car_shop.models m 
       ON concat(split_part(split_part(s.auto, ',', 1), ' ', 2), ' ', split_part(split_part(s.auto, ',', 1), ' ', 3)) = m.model_name 
