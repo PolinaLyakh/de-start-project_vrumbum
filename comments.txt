@@ -31,7 +31,7 @@
 
 
 Комментарии по исправлениям:
-1) Добавили в файл INITIAL.sql в таблицу models_colors первичный ключ, в таблицу purchases внешний ключ ссылающийся на id таблицы models_colors
+1) Добавили в файл DDL.sql в таблицу models_colors первичный ключ, в таблицу purchases внешний ключ ссылающийся на id таблицы models_colors
 2) Добавили в файл INSERT.sql заполнение столбца models_colors_id таблицы purchases данными
 Уникальность данных для выбора составного ключа для связи с purchases была проверена скриптом:
  SELECT 
@@ -43,3 +43,4 @@
    FROM raw_data.sales
    GROUP BY 1,2,3,4,5
    HAVING count(*) > 1;
+3) В файле INSERT.sql добавили ключевое слово distinct в скрипт по заполнению таблицы models_colors для удаления дублей
