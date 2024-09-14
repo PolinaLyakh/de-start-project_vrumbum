@@ -43,3 +43,10 @@ price numeric(9, 2) NOT NULL    /* Будут храниться денежны�
 
 -- Забыли указать скидку
 ALTER TABLE car_shop.purchases ADD COLUMN discount integer DEFAULT 0;    /* Будут храниться целые значения */
+
+
+-- Добавление первичного ключа в таблицу models_colors
+ALTER TABLE car_shop.models_colors ADD COLUMN id serial PRIMARY KEY;
+
+-- Добавление внешнего ключа в таблицу purchases
+ALTER TABLE car_shop.purchases ADD COLUMN models_colors_id integer REFERENCES car_shop.models_colors(id);
