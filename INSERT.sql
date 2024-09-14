@@ -40,3 +40,24 @@ INNER JOIN car_shop.models m
       ON concat(split_part(split_part(s.auto, ',', 1), ' ', 2), ' ', split_part(split_part(s.auto, ',', 1), ' ', 3)) = m.model_name
 INNER JOIN car_shop.clients c 
       ON c.client_name = s.person_name AND c.phone = s.phone;
+
+
+-- Заполнение данными внешнего ключа models_colors_id таблицы purchases ссылающегося на id таблицы models_colors
+UPDATE car_shop.purchases AS p SET 
+    models_colors_id = mc.id
+FROM raw_data.sales s 
+INNER JOIN car_shop.models m 
+    ON concat(split_part(split_part(s.auto, ',', 1), ' ', 2), ' ', split_part(split_part(s.auto, ',', 1), ' ', 3)) = m.model_name
+INNER JOIN car_shop.colors AS c
+	ON c.color_name = split_part(s.auto, ' ', -1)
+INNER JOIN car_shop.models_colors AS mc
+	ON m.id = mc.model_id 
+	AND c.id = mc.color_id 
+INNER JOIN car_shop.clients c2 
+    ON c2.client_name = s.person_name AND c2.phone = s.phone
+WHERE CAST(p.price AS numeric(9,2)) = CAST(s.price AS numeric(9,2))
+	AND p.client_id = c2.id 
+	AND p.date_purch = s.date 
+	AND p.model_id = m.id 
+	AND p.discount = s.discount ;
+
